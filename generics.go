@@ -162,3 +162,25 @@ func addReflection(m, n any) any {
 func addNumbers[T Number](m, n T) T {
 	return m + n
 }
+
+// 6) Exercise 1 -> "Write a generic function which determines whether a list of elements contains certain element"
+func contains[T comparable](list []T, target T) bool {
+	for _, elem := range list {
+		if elem == target {
+			return true
+		}
+	}
+	return false
+}
+
+// Exercise 2 -> "Write a generic function which extracts a map's keys into a slice"
+func keys[K comparable, V any](m map[K]V) []K {
+	result := make([]K, 0, len(m))
+	for key := range m {
+		result = append(result, key)
+	}
+	return result
+}
+
+// NOTE -> [comparable] is the constraint for types that support equality operators == and !=
+// it cannot be used with slices, maps and functions

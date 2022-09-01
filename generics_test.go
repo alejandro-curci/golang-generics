@@ -60,3 +60,28 @@ func (t *genericSuite) Test_TypeApproximation() {
 	a, b := Floint(4), Floint(9)
 	_ = Min(a, b) // with approximation, OK
 }
+
+func (t *genericSuite) Test_Contains() {
+	numbers := []int{34, 22, 91, 3, 7, 135}
+	words := []string{"hello", "world", "from", "golang"}
+
+	t.True(contains(numbers, 91))
+	t.True(contains(words, "golang"))
+
+	t.False(contains(numbers, 1))
+	t.False(contains(words, "bye"))
+}
+
+func (t *genericSuite) Test_Keys() {
+	myMap := map[string]struct{ name string }{
+		"first":  {name: "john"},
+		"second": {name: "will"},
+		"third":  {name: "bob"},
+		"forth":  {name: "saul"},
+	}
+	k := keys(myMap)
+	t.True(contains(k, "first"))
+	t.True(contains(k, "third"))
+	t.False(contains(k, "fake_key"))
+	t.False(contains(k, "unreal"))
+}
