@@ -107,3 +107,31 @@ func Benchmark_AddInt64(b *testing.B) {
 		}
 	})
 }
+
+func Benchmark_RunRenault(b *testing.B) {
+	myRenault := renault{speed: 80}
+	// regular function
+	b.Run("RegularFunction", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			runRenault(myRenault)
+		}
+	})
+	// function with type assertion
+	b.Run("TypeAssertion", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			runInterface(myRenault)
+		}
+	})
+	// function with generics
+	b.Run("Generics", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			runGenerics(myRenault)
+		}
+	})
+	// function with reflection
+	b.Run("Reflection", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			runReflection(myRenault)
+		}
+	})
+}

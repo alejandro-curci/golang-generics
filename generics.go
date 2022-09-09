@@ -184,3 +184,40 @@ func keys[K comparable, V any](m map[K]V) []K {
 
 // NOTE -> [comparable] is the constraint for types that support equality operators == and !=
 // it cannot be used with slices, maps and functions
+
+// 7) Another example with benchmarks
+type (
+	Runner interface {
+		Run()
+	}
+	renault struct {
+		speed float64
+	}
+)
+
+func (r renault) Run() {
+	_ = fmt.Sprintf("Renault running at %v km/h\n", r.speed)
+}
+
+// solution with concrete type
+func runRenault(r renault) {
+	r.Run()
+}
+
+// solution with generics
+func runGenerics[T Runner](car T) {
+	car.Run()
+}
+
+// solution with type assertion
+func runInterface(c any) {
+	r, ok := c.(renault)
+	if ok {
+		r.Run()
+	}
+}
+
+// solution with reflection
+func runReflection(c any) {
+	reflect.ValueOf(c).MethodByName("Run").Call(nil)
+}
